@@ -17,3 +17,5 @@ For the sake of simplicity, I don't follow the typical academic protocol. Instea
 * MS Excel
 
 https://github.com/ZorinIvanov/Snow-gliding-analysis/blob/0741c4b648408175ee415242917a0f0af9b5c83a/snow_gliding_master_dataset.R#L1-L20
+
+https://github.com/ZorinIvanov/Snow-gliding-analysis/blob/0b2df78fce488b7dafb633e09097c3a46fe0600a/aggregates.csv#L1-L20
