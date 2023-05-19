@@ -16,3 +16,4 @@ For the sake of simplicity, I don't follow the typical academic protocol. Instea
 * SPSS
 * MS Excel
 
+https://github.com/ZorinIvanov/Snow-gliding-analysis/blob/0741c4b648408175ee415242917a0f0af9b5c83a/snow_gliding_master_dataset.R#L1-L20
