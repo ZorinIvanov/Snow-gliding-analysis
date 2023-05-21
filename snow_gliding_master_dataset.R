@@ -5,20 +5,28 @@ library(data.table)
 # Create cumulative global radiation for every day and merge the two stations 
 station2 <- read.csv("aggregates_sta.csv",header=TRUE, sep=",")
 station2$date <- as.Date(station2$Group.1, "%Y-%m-%d")  # convert the date as date format
-station2[,"cum_rad"] <- cumsum(station2$Rad_mean.x)
+station2[,"cum_rad"] <- cumsum(station2$Rad_mean.x)  # create a cumulative sum for the income radiation variable
 
 station <- read.csv("aggregates.csv",header=TRUE, sep=",")
 station$date <- as.Date(station$Group.1, "%Y-%m-%d")  # convert the date as date format
 station <- pad(station)  # use the pad function from the padr library to fill any gaps in the datetime variable
 
+head(station)
+head(station2)
+
+#write.csv(head(station), file = "station1_1.csv")
+#write.csv(head(station2), file = "station2_1.csv")
 # convert the data as data.tables and set a key on which we can merge them into a single dataset
 setDT(station2)
 setDT(station)
 setkey(station2, date)
 setkey(station, date)
 
-master_dataset <- station2 [station] #merge them into a single dataset
+master_dataset <- station2[station] #merge them into a single dataset
 
+head(master_dataset)
+
+#write.csv(head(master_dataset), file = "md_1.csv")
 
 # function that reads the logger data, calculates a daily sum for each logger and gets the average for a fall line 
 read_and_sum <- function(some_list, station_subset) {
