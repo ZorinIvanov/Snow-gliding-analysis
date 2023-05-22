@@ -91,3 +91,4 @@ Here is a snippet of how the output looks like:
 | 2015-11-11 | 0.000          |
 
 The next step is to repeat this for the other two fall lines of the 2015-16 winter season and do the same for the 2016-17, 2017-18, 2018-19 seasons. By the end of this we end up with daily averages for each fall line for each season, which we merge output row-wise by fall line. We join each fall line to the master dataset to adopt its frame. Finally, we calculate the overall distance average of the fall lines averages:
+https://github.com/ZorinIvanov/Snow-gliding-analysis/blob/d7d164d4ffa2942bc3e300da6aaf251a8bc6136c/snow_gliding_master_dataset.R#L195-L215
