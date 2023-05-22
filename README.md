@@ -75,3 +75,19 @@ The next step is to import the loggers. A raw logger data looks like this:
 
 The logger stores impulses whenever it detects movement. Each impuse is equal to 0.785 mm of distance moved. It is important to mention that 0 and 1 in the "corImpulses" column does not say whether there is an impulse. In our case both are impulses so don't pay attention to this column. By design the loggers were mounted at the beginning of each season in three fall lines, each fall line consisting of 4-6 loggers. This means that we handle our logger data in groups organized by season (date) and by fall line. The aim in our next function is to import the loggers grouped by the fall line they are in, then to aggregate the distance data to daily sums (to fit the daily time series template of the master dataset) and finally to calculate the daily fall line distance average.
 https://github.com/ZorinIvanov/Snow-gliding-analysis/blob/19204162b682a39c993bbbaf491881c6375fb412/snow_gliding_master_dataset.R#L31-L80
+
+Here is a snippet of how the output looks like:
+| date       | fall_line_mean |
+|------------|----------------|
+| 2015-11-02 | 0.785          |
+| 2015-11-03 | 0.157          |
+| 2015-11-04 | 0.000          |
+| 2015-11-05 | 0.000          |
+| 2015-11-06 | 0.000          |
+| 2015-11-07 | 0.000          |
+| 2015-11-08 | 0.157          |
+| 2015-11-09 | 0.000          |
+| 2015-11-10 | 0.000          |
+| 2015-11-11 | 0.000          |
+
+The next step is to repeat this for the other two fall lines of the 2015-16 winter season and do the same for the 2016-17, 2017-18, 2018-19 seasons. By the end of this we end up with daily averages for each fall line for each season, which we merge output row-wise by fall line. We join each fall line to the master dataset to adopt its frame. Finally, we calculate the overall distance average of the fall lines averages:
