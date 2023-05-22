@@ -19,4 +19,3 @@ For the sake of simplicity, I don't follow the typical academic protocol. Instea
 ## Part 1: Data cleaning and preparation of the master dataset.
 In this part I import the data from two weather stations (Station 1 and Station 2) and the loggers data. The main idea of this part is to end up having a single homogeneous data set containing all the data necessary for analysis. The raw output of the weather stations has a measurement every 10 minutes. For our purpose we decided that a daily time series is detailed enough, yet not overly complicated; hence all data was agregated to daily averages (where sensible) and/or sums, maximums, minimums. For more details, let's dive straight into the dataset.
 
-https://github.com/ZorinIvanov/Snow-gliding-analysis/blob/0741c4b648408175ee415242917a0f0af9b5c83a/snow_gliding_master_dataset.R#L1-L20
