@@ -214,6 +214,8 @@ master_dataset <- fl3 [master_dataset]
 # create the mean of means of the fall lines
 master_dataset$fl_mean <- rowMeans(master_dataset[,c(2,3,4)])
 
+#write.csv(slice(master_dataset, 1110:1120), file = "md_2.csv")
+
 
 # Import the Soil Moisture and Temp data
 brown15 <- read.csv("brown2015_agg.csv",header=TRUE, sep=",")
@@ -396,22 +398,19 @@ MyD$date <- as.Date(MyD$Datetime, "%d.%m.%Y")
 
 setDT(MyD)
 
-snow_pillows_mean <- aggregate(MyD$Schneekissen, by = list(MyD$date),FUN = mean)
-names(snow_pillows_mean) <- c("date", "schneekissen_mean")
+snow_pillows_mean <- MyD[ ,.(schneekissen_mean = mean(Schneekissen, na.rm = T)), by = date]
 setDT(snow_pillows_mean)
 setkey(snow_pillows_mean, date)
 master_dataset <- snow_pillows_mean[master_dataset]
 
-snow_pillows_sum <- aggregate(MyD$Schneekissen, by = list(MyD$date),FUN = sum)
-names(snow_pillows_sum) <- c("date", "schneekissen_sum")
+snow_pillows_sum <- MyD[ ,.(schneekissen_sum = sum(Schneekissen, na.rm = T)), by = date]
 setDT(snow_pillows_sum)
 setkey(snow_pillows_sum, date)
 master_dataset <- snow_pillows_sum[master_dataset]
 
 
 # global radiation daily sum
-sum_rad <- aggregate(MyD$Globalstrahlung.refl., by = list(MyD$date),FUN = sum)
-names(sum_rad) <- c("date", "sum_rad")
+sum_rad <- MyD[ ,.(sum_rad = sum(Globalstrahlung.refl., na.rm = T)), by = date]
 setDT(sum_rad)
 setkey(master_dataset, date)
 setkey(sum_rad, date)
