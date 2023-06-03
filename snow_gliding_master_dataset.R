@@ -415,6 +415,7 @@ setDT(sum_rad)
 setkey(master_dataset, date)
 setkey(sum_rad, date)
 master_dataset <- sum_rad [master_dataset]
+#write.csv(slice(master_dataset, 1110:1120), file = "md_2.csv")
 
 # remove every object except the master_dataset from the environment
 all_vars <- ls()
@@ -422,3 +423,29 @@ keep_var <- "master_dataset"
 remove_vars <- setdiff(all_vars, keep_var)
 rm(list = remove_vars)
 
+
+# determine when permanent snow cover is established each season (14 consecutive days with > 10cm snow)
+# run length encoding for a logical vector where everything above 10 is True.
+runs <- rle(master_dataset$snowheight_mean_north > 10)
+
+true_runs_indexes <- which(runs$values)  # find the indexes of all >10 (True) runs
+row <- cumsum(runs$lengths)  # create cumulative sum of len to access the end position of every run
+
+# find the start and end date of all >10 (True) runs
+start <- master_dataset$date[row[true_runs_indexes] - runs$lengths[true_runs_indexes] + 1]
+end <- master_dataset$date[row[true_runs_indexes]]
+
+# create a output dataframe containing the gap of all true runs
+output <- data.frame (start_row = row[true_runs_indexes] - runs$lengths[true_runs_indexes] + 1, 
+                      end_row = row[true_runs_indexes],
+                      start_time = start, 
+                      end_time = end,
+                      gap = (row[true_runs_indexes] - (row[true_runs_indexes] - runs$lengths[true_runs_indexes] + 1)) + 1)
+
+
+output$start_time <- as.Date(output$start_time)  # Convert factor to Date
+
+# create a vector that holds the start time of every winter season for the seasons to be analyzed
+output <- output[which(output$gap >= 14 &
+                         output$start_time > "2015-01-01" &
+                         output$start_time < "2019-01-01"), "start_time"]
